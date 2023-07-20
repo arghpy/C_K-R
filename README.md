@@ -1,4 +1,4 @@
-# C_K-R
+# C_K-R test
 
 This repository follows the book The C Programming Language 2nd Edition,
 by 	Brian Kernighan and Dennis Ritchie
