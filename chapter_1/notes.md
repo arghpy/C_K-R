@@ -301,3 +301,89 @@ variables. Here is one version of the program:
 
 
 ## 1.7 Functions
+
+
+A function provides a convenient way to encapsulate some computation,
+which can then be used without worrying about its implementation. With
+properly designed functions, it is possible to ignore *how* a job is done;
+knowing *what* is done is sufficient. C makes the use of functions easy,
+convenient and efficient; you will often see a short function defined and
+called only once, just because it clarifies some piece of code.
+
+
+So far we have used only functions like `printf`, `getchar`, and `putchar`
+that have been provided for us; now it's time to write a few of our own. 
+Sincce C has no exponentiation operator like `**` of Fortran, let us 
+illustrate the mechanics of functino definition by writing a function 
+`power(m,n)` to raise an integer `m` to a positive integer power `n`. That
+is, the value of `power(2,5)` is 32. This function is not a practical
+exponentiation routine, since it handles only positive powers of small 
+integers, but it's good enough for illustration.
+
+
+Here is the function `power` and a main program to exercise it, so you can 
+see the whole structure at once.
+
+
+**Program**: [power](code/pow.c)
+
+
+The names used by `power` for its parameters are local to `power`, and are
+not visible to any other function: other routines can use the same names
+without conflict. This is also true of the variables `i` and `p`: the i in
+power is unrelated to the i in main.
+
+
+We will generally use **parameter** for a variable named in the parenthesized
+list in a function definition, and **argument** for the value used in a call
+of the function. The terms **formal argument** and **actual argument** are
+sometimes used for the same distinction.
+
+
+Any expression may follow **return**:
+
+```
+return expression;
+```
+
+
+A functin need no return a value; a `return` statement with no expression
+causes control, but no useful value, to be returned to the caller, as does
+"falling off the end" of a function by reaching the terminating right brace.
+And the calling function can ignore a value returned by a function.
+
+
+You may have noticed that there is a `return` statement at the end of `main`.
+Since `main` is a function like any other, it may return a value to its
+caller, which is in effect the environment in which the program was executed.
+Typically, a return value of zero implies normal terminatin; non-zero values
+signal unusual or erroneous termination conditions. In the interests of 
+simplicity, we have omitted `return` statements from our `main` functions up
+to this point, but we will include them hereafter, as a reminder that 
+programs should return status to their environment.
+
+
+The declaration:
+
+```
+int power(int m, int n);
+```
+
+just before `main` says that `power` is a function that expects two **int**
+arguments and returns a **int**. This declaration, which is called a 
+`function prototype`, has to agree with the definition and uses of `power`.
+It is an error if the definition of a function or any uses of it do not 
+agree with its prototype.
+
+
+Parameter names need not agree. Indeed, parameter names are optional in a
+function prototype, so for the prototype we could have written:
+
+```
+int power(int , int );
+```
+
+Well-chosen names are good documentation, however, so we will often use them.
+
+
+
