@@ -386,4 +386,37 @@ int power(int , int );
 Well-chosen names are good documentation, however, so we will often use them.
 
 
+## 1.8 Arguments - Call by Value
+
+
+In C, all function arguments are passed "by value". This means that the 
+called function is given the values of its arguments in temporary variables
+rather than the originals. This leads to some different properties than are 
+seen with "call by reference" languages.
+
+
+The main distinction is that in C the called function cannot directly alter
+a variable in the calling function; it can only alter its private, temporary
+copy.
+
+
+Call by value is an asset, however, not a liability. It usually leads to more
+compact programs with fewer extraneous vairables, because parameters can be
+treated as conveniently initialized local vairables in the called routine.
+
+
+When necessary, it is possible to arrange for a function to modify a variable
+in a calling routine. The caller must provide the **address** of the 
+variable to be set (technically a **pointer** to the variable), and the 
+called function must declare the parameter to be a pointer and access the
+variable indirectly through it.
+
+
+The story is different for arrays. When the name of an array is used as an
+argument, the value passed to the function is the location or address of the
+beginning of the array - there is no copying of array elements. By 
+subscripting the value, the function can access and alter any element of 
+the array.
+
+
 
