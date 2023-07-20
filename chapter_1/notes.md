@@ -419,4 +419,51 @@ subscripting the value, the function can access and alter any element of
 the array.
 
 
+## 1.9 Character Arrays
+
+
+The most common type of array in C is the array of characters. To illustrate
+the use of character arrays and functions to manipulate them, let's write a
+program that reads a set of text lines and prints the longest. The outline is 
+simple enough:
+
+```
+while (there's another line)
+    if (it's longer than the previous longest)
+        save it
+        save its length
+print longest line
+```
+
+
+This outline makes it clear that the program divides naturally into pieces.
+One piece gets a new line, another tests it, another saves it, and the rest
+controls the process.
+
+
+Since things divide so nicely, it would be well to write them that way too.
+Accordingly, let us first write a separate function **getline** to fetch the
+next line of input. We will try to make the function useful in other 
+contexts. At the minimum, `getline` has to return a signal about possible 
+end of file; a more useful design would be to return the length of the line, 
+or zero if end of file is encountered. Zero is an acceptable end-of-file 
+return because it is never a valid line length. Every text line has at least
+one character; even a line containing only a newline has length 1.
+
+
+When we find a line that is longer than the previous longest line, it must
+be saved somewhere. This suggests a second function, **copy**, to copy the 
+new line to a safe place.
+
+
+Finally, we need a main program to control **getline** and **copy**. Here is
+the result:
+
+
+**Program**: [Biggest line](code/biggest_line.c)
+
+
+## 1.10 External Variables and Scope
+
+
 
