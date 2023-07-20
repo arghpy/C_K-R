@@ -466,4 +466,15 @@ the result:
 ## 1.10 External Variables and Scope
 
 
+Each local variable in a function comes into existence only when the function is called,
+and disappears when the function is exited. This is why such variables are usually
+known as **automatic** variables, following terminology in other languages. We will
+use the term automatic henceforth to refer to these local variables.
+
+
+Because automatic variables come and go with function invocation, they do not retain
+their values from one call to the next, and must be explicitly set upon each entry. If
+they are not set, they will contain garbage.
+
+
 
