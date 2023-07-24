@@ -89,3 +89,149 @@ instance, if chars are 8 bits, unsigned char varibles have values between
 complement machine). Whether plain chars are signed or unsigned is 
 machine-dependent, but printable characters are always positive.
 
+
+## 2.3 Constants
+
+
+An *integer constant* like **1234** is an `int`. A `long` constant is written
+with a terminal **l** (ell) or **L**, as in **1234L**; an integer too big
+to fit into an `int` will also be taken as a `long`. Unsigned constants
+are written with a terminal **u** or **U**, and the suffix **ul** or **UL**
+indicates `unsigned long`.
+
+
+*Floating-point* constants contain a decimal point (123.4) or an 
+exponent (1e-2)
+or both; their type is double, unless suffixed. The suffixes **f** or **F**
+indicate a `float` constant; **l** or **L** indicate a `long double`.
+
+
+The value of an integer can be specified in octal or hexadecimal instead of
+decimal. A leading 0 (zero) on an integer constant means octal; a leading 
+**0x** or **0X** means hexadecimal. For example, decimal 31 can be written
+as 037 in octal and 0x1f or 0X1F in hex. Octal and hexadecimal constants
+may also be followed by an L to make them long and U to make them unsigned;
+0XFUL is an unsigned long constant with value 15 decimal.
+
+
+A *character constant* is an integer, written as one character within single 
+quotes, such as 'x'. The value of a character constant is the numeric value
+of the character in the machine's character set. For example, in the ASCII
+character set the character constant '0' has the value 48, which is unrelated
+to the numeric value 0.
+
+
+Certain characters can be represented in character and string constants by
+escape sequences like **\\n** (newline). In addition, an arbitrary byte-sized
+bit pattern can be specified by **\\000** where `000` is one to three octal
+digits (0..7) or by **\\xhh** where hh is one or more hexadecimal digits
+(0..9, a..f, A..F). So we might write:
+
+
+```
+#define VTAB '\013' /* ASCII vertical tab */
+#define BELL '\007' /* ASCII bell character */
+```
+
+
+or in hexadecimal:
+
+
+```
+#define VTAB '\xb' /* ASCII vertical tab */
+#define BELL '\x7' /* ASCII bell character */
+```
+
+
+A `constant expression` is an expression that involves only constants.
+Such expressions may be evaluated during compilation rather than run-time
+, and accordingly may be used in any place that a constant can occur, as in:
+
+
+```
+#define MAX 1000
+char line[MAX];
+```
+
+
+A `string constant`, or `string literal`, is a sequence of zero or more
+characters surrounded by double quotes, as in "I am a string" or the empty
+string "".
+
+
+String constants can be concatenated at compile time:
+
+```
+"hello," " world"
+```
+
+
+is equivalent to "hello, world". This is useful for splitting long strings
+across several source lines.
+
+
+Technically, a string constant is an array of characters. The internal
+representation of a string has a null character '\0' at the end, so the
+physical storage required is one more than the number of characters written
+between the quotes. This representation means that there is no limit
+to how long a string can be, but programs must scan a string completely to
+determine its length. The standard library function **strlen(s)** returns 
+the length of its character string argument s, excluding the terminal '\0'.
+
+
+Here is our version:
+
+
+**Program**[Strlen version](code/my_strlen.c)
+
+
+**strlen** and other string functions are declared in the standard header
+**<string.h>**.
+
+
+Be careful to distinguish between a character constant and a string that 
+contains a single character: 'x' is not the same as "x". The former is an 
+integer, used to produce the numeric value of letter x in the machine's 
+character set, while the latter is an array of characters that contains 
+the character x and '\0'.
+
+
+There is one other kind of constant, the *enumeration constant*. An 
+enumeration is a list of constant integer values, as in:
+
+
+```
+enum boolean { NO, YES };
+```
+
+
+The first name in an enum has value 0, the next 1, and so on, unless explicit
+values are specified. If not all values are specified, unspecified values
+continue the progression from the last specified value, as in the second
+of these examples:
+
+
+```
+enum escapes { BELL = '\a', BACKSPACE = '\b', 
+                NEWLINE = '\n' };
+
+enum months {JAN = 1, FEB, MAR };
+// FEB is 2, MAR is 3
+```
+
+
+Names in different enumerations must be distinct. Values need not be distinct
+in the same enumeration.
+
+
+Enumerations provide a conveninet way to associate constant values with names,
+an alternative to **#define** with the advantage that the values can be
+generated for your. Although variables of *enum* types may be declared,
+compilers need not check that what you store in such a variable is a valid
+value for the enumeration. Nevertheless, enumeration variables offer
+the chance of checking and so are often better than *#defines*. In addition,
+a debugger may be able to print values of enumeration variables in their
+symbolic form.
+
+
+
