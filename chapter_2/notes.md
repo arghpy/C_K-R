@@ -89,3 +89,8 @@ instance, if chars are 8 bits, unsigned char varibles have values between
 complement machine). Whether plain chars are signed or unsigned is 
 machine-dependent, but printable characters are always positive.
 
+
+
+The standars headers **<limits.h>** and **<float.h>** contain symbolic
+constants for all of these sizes, along with other properties of the machine
+and compiler.
