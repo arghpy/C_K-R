@@ -241,4 +241,3 @@ symbolic form.
 
 
 
->>>>>>> chapter2_2.3
