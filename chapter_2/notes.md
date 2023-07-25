@@ -240,4 +240,50 @@ a debugger may be able to print values of enumeration variables in their
 symbolic form.
 
 
+## 2.4 Declarations
+
+
+All variables must be declared before use, although certain declarations can
+be made implicitly by context. A declaration specifies a type, and contains a
+list of one or more variables of that type, as in:
+
+```
+int lower, upper, step;
+char c, line[1000];
+```
+
+
+If the variable in question is not automatic, the initialization is done once
+only, conceptually before the program starts executing, and the initializer
+must be a constant expression. An explicitly initialized automatic variable
+is initialized each time the function or block it is in is entered; the
+initializer may be any expression. External and static variables are 
+initialized to zero by default. Automatic variables for which there is no
+explicit initializer have undefined (i.e. garbage) values.
+
+
+The qualifier **const** can be applied to the declaration of any variable
+to specify that its value will not be changed. For an array, the **const**
+qualifier says that the elements will not be altered.
+
+
+```
+const double e = 2.41;
+cont char msg[] = "warning: ";
+```
+
+
+The **const** declaration can also be used with array arguments, to indicate
+that the function does not change the array:
+
+
+```
+int strlen(const char[]);
+```
+
+
+The result is implementation-defined if an attempt is made to change a 
+**const**.
+
+
 
