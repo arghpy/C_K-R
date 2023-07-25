@@ -299,4 +299,49 @@ The "%" operator cannot be applied to *float* or *double*.
 Arithmetic operators associate left to right.
 
 
+## 2.6 Relational and Logical Operators
+
+
+The relational operators are:
+
+```
+>       >=      <       <=
+```
+
+
+They all have hte same precedence. Just below them in precedence are the
+equality operators:
+
+
+```
+==      !=
+```
+
+
+Relational operators have lower precedence than arithmetic operators, so an
+expression like **i < lim - 1** is taken as **i < (lim - 1)**, as would be
+expected.
+
+
+More interesting are the logical operators **&&** and **||**. Expressions
+connected by them are evaluated left to right, and evaluation stops as soon as
+the truth or falsehood of the result is known.
+
+
+By definition, the numeric value of a relational or logical expression is 1
+if the relation is true, and 0 if the relation is false.
+
+
+The unary negation operator **!** converts a non-zero operand into 0, and a
+zero operand into 1:
+
+```
+if (!valid)
+```
+rather than
+```
+if (valid == 0)
+```
+
+
 
