@@ -286,4 +286,17 @@ The result is implementation-defined if an attempt is made to change a
 **const**.
 
 
+## 2.5 Arithmetic operators
+
+
+The binary arithmetic operators are "+, -, *, /" and the modulus operator "%".
+Integer division truncates any fractional part.
+
+
+The "%" operator cannot be applied to *float* or *double*.
+
+
+Arithmetic operators associate left to right.
+
+
 
