@@ -344,4 +344,125 @@ if (valid == 0)
 ```
 
 
+## 2.7 Type Conversions
+
+
+When an operator has operands of different types, they are converted to a 
+common type according to a small number of rules. In general, the only 
+automatic conversions aree those that convert a "narrower" operand into a 
+"wider" one without losing information, such as converting an integer to 
+floating point in an expression like **f + i**. Expressions that don't make
+sense, like using a **float** as a subscript, are disallowed. Expressions 
+that might lose information, like assigning a longer integer type to a 
+shorther, or a floating-point type to an integer, may draw a warning, but 
+they are not illegal.
+
+
+A **char** is just a small integer, so chars may be freely used in arithmetic
+expressions. One is exemplified by this naive implementation of the function
+**atoi**, which converts a string of digits into its numeric equivalent:
+
+
+**Program**[Atoi](code/my_atoi.c)
+
+
+As discussed, the expression **s[i] - '0'** gives the numeric value of the 
+character stored in s[i].
+
+
+Another example of **char** to **int** conversion is the function **lower**,
+which maps a single character to lower case for the ASCII character set. If
+the character is not an upper case letter, **lower** return it unchaged:
+
+
+**Program**[Lower](code/lower.c)
+
+
+This works for ASCII because corresponding upper case and lower case letters
+are a fixed distance apart as numeric values and each alphabet is contigous -
+there is nothing but letters between A and Z.
+
+
+The standard header **<ctype.h>** defines a family of functions that provide
+tests and conversions that are independent of character set. For example, the
+function **tolower(c)** returns the lower case value of c if c is upper case
+, so **tolower** is a portable replacement for the function **lower** shown
+above. Similarly, the test:
+
+```
+c >= '0' && c <= '9'
+```
+
+can be replaced by **isdigit(c)**. We will use the **<ctype.h>** function from
+now.
+
+
+There is one subtle point about the conversion of characters to integers. The
+language does not specify whether variables of type *char* are signed or 
+unsigned quantities. When a *char* is converted to an *int*, can it ever 
+produce a negative integer? The answer varies from machine to machine, 
+reflecting differences in architecture. For portability, specify **signed**
+or **unsigned** if non-character data is to be stored in *char* variables.
+
+
+*Note*: in the tests, **true** just means **non-zero**.
+
+
+Implicit arithmetic conversions work much as expected. In general, if an 
+operator like + or * that takes two operands (binary operator) has operands
+of different types, the "lower" type is **promoted** to the "higher" type 
+before the operation proceeds. The result is of the higher type.
+
+
+Since an argument of a fucntion call is an expression, type conversions also
+take place when arguments are passed to functions. Explicit type conversions
+can be forced ("coerced") in any expression, with a unary operator called a 
+**cast**. In the construction:
+
+
+```
+(type-name) expression
+```
+
+the expression is converted to the named type by the conversion rules. The 
+precise meaning of a cast is as if the *expression* were assigned to a 
+variable of the specified type, which is then used in place of the whole
+construction. For example, the library routine **sqrt** expects a double
+argument, and will produce nonsense if inadvertently handed something else.
+So if *n* is an integer, we can use:
+
+```
+sqrt((double) n)
+```
+
+to convert the value of *n* to *double* before passing it to sqrt. Note that
+the cast produces the *value* of *n* in the proper type; *n* itself is not
+altered.
+
+
+If arguments are declared by a function prototype, as they normally should
+be, the declaration causes automatic coercion of any arguments when the
+function is called. Thus, given a function prototype for *sqrt*:
+
+```
+double sqrt(double);
+```
+
+the call:
+
+```
+root2 = sqrt(2);
+```
+
+coerces the integer 2 into the *double* value 2.0 without any need for a cast.
+
+
+The standard library includes a portable implementation of a pseudo-random
+number generator and a function for initializing the seed; the former 
+illustrates a cast:
+
+
+**Program**[rand and srand](code/rand_srand.c)
+
+
 
