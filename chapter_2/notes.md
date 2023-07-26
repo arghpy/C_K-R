@@ -465,4 +465,82 @@ illustrates a cast:
 **Program**[rand and srand](code/rand_srand.c)
 
 
+## 2.8 Increment and Decrement Operators
+
+
+C provides two unusual operators for incrementing and decrementing variables.
+The increment operator ++ ads 1 to its operand, while the decrement operator
+-- subtracts 1. The unusual aspect is that ++ and __ may be used either as 
+prefix operators (before the variable, as in ++n), or postfix (after the 
+variable, as in n++). But the expression *++n* increments *n* **before**
+its value is used, while n++ increments *n* **after** its value has been used.
+This means that in a context where the value is being used, not just the
+effect, ++n and n++ are different. If *n* is 5, then:
+
+```
+x = n++;
+```
+sets x to 5, but
+```
+x = ++n;
+```
+sets x to 6. In both cases, n becomes 6. The increment and decrement operators
+can only be applied to varibles; an expression like (i + j)++ is illegal.
+
+
+In a context where no value is wanted, just the incrementing effect, prefix
+and postfix are the same. But there are situations where one or the other
+is specifically called for. For instance, consider the function 
+**squeeze(s,c)**, which removes all occurrences of the character c from string
+s:
+
+
+**Program:**[squeeze](code/squeeze.c)
+
+
+Each time a non-c occurs, it is copied into the current j position, and only
+then is j incremented to be ready for the next character. This is exactly 
+equivalent to:
+
+
+```
+if (s[i] != c) {
+    s[j] = s[i];
+    j++;
+}
+```
+
+
+Another example of a similar construction comes from the *getline* function
+that we wrote, where we can replace:
+
+```
+if (c == '\n') {
+    s[i] = c;
+    ++i;
+}
+```
+
+by the more compact:
+
+```
+if (c == '\n')
+    s[i++] = c;
+```
+
+As a third example, consider the standard function **strcat(s,t)**, which
+concatenates the string t to the end of the string s. *strcat* assumes 
+that there is enough space in s to hold the combination. As we have written it
+*strcat* returns no value; the standard library version returns a pointer to
+the resulting string:
+
+
+**Program:**[strcat](code/strcat.c)
+
+
+As each character is copied from t to s, the postfix ++ is applied to both
+i and j to make sure that they are in position for the next pass through
+the loop.
+
+
 
