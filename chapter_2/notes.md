@@ -642,4 +642,26 @@ In all such expressions, the type of an assignment expression is the type
 of its left operand, and the value is the value after the assignment.
 
 
+## 2.11 Conditional Expressions
 
+
+The statements:
+
+```
+if (a > b)
+    z = a;
+else
+    z = b;
+```
+
+compute in z the maximum of a and b. The conditional expression, written with
+the ternary operator **?:**, provides an alternate way to write this and 
+similar constructions. Thus, the if/else statement can be written as:
+
+```
+z = (a > b) ? a : b;    // z = max(a, b)
+```
+
+If a and b are of different types, than the result is determined by the 
+conversion rules. For example, if a si float and b is int, the result will be
+a float.
