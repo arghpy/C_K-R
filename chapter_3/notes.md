@@ -66,3 +66,48 @@ The identation shows unequivocally what you want, but the compiler doesn't
 get the message, and associates the else with the inner if. This kind of
 bug can be hard to find; it's a good idea to use braces when there are 
 nested ifs.
+
+
+## 3.3 Else-If
+
+
+The construction:
+
+```
+if (expression)
+    statement1
+else if (expression)
+    statement2
+else
+    statement3
+```
+
+
+occurs often. This sequence of if statements is the most general way of 
+writing a multi-way decision. The expression are evaluated in order; if any
+expression is true, the statement associated with it is executed, and this
+terminates the whole chain.
+
+
+To illustrate a three-way decision, here is a binary search function that 
+decides if a particular value x occurs in the sorted array v. The elements of
+v must be in increasing order. The function returns the position (a number
+between 0 an n-1) if x occurs in v, and -1 if not.
+
+
+Binary search first compares the input of value x to the middle element of
+the array v. If x is less than the middle value, searching focuses on the
+lower half of the table, otherwise on the upper hald. In either case, the
+next step is to compare x to the middle element of the selected half. This 
+process of dividing the range in two continues until the value is found
+or the range is empty.
+
+
+**Program**[binary search](code/binary_search.c)
+
+
+The fundamental decision is whether x is less than, greater than, or equal
+to the middle element v[mid] at each step; this is a natural for else-if.
+
+
+
