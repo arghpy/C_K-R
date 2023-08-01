@@ -665,3 +665,24 @@ z = (a > b) ? a : b;    // z = max(a, b)
 If a and b are of different types, than the result is determined by the 
 conversion rules. For example, if a si float and b is int, the result will be
 a float.
+
+
+## 2.12 Precedence and Order of Evaluation
+
+
+Operators on the same line have the same precedence; rows are in order of 
+decreasing precedence, so, for example, *, /, and % all have the same
+precedence, which is higher than that of binary + and -. The "operator" ()
+refers to function call. The operators -> and . are used to access members
+of structures; they will be covered in Chapter 6. Chapter 5 discusses * 
+(indirection through a pointer) and & (address of an object), and Chapter 3
+discusses comma operator.
+
+
+Note that the precedence of the bitwise operators &, ^, and | falls below
+== and !=. This implies that bit-testing expressions like 
+`if ((x & MASK) == 0) ...` must be fully parenthesized to give proper results.
+
+
+C, like most languages, does not specify the order in which the operands of
+an operator are evaluated.
