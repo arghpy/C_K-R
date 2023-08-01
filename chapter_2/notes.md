@@ -603,3 +603,43 @@ The expression **x >> (p + 1 - n)** moves the desired field to the right end
 of the word. **~0** is all 1-bits; shifting it left n bit positions with 
 **~0 << n** places zeros in the rightmost n bits; complementing that with ~
 makes a mask with ones in the rightmost n bits.
+
+
+## 2.10 Assignment Operators and Expressions
+
+
+Expressions such as `i = i + 2` in which the variable on the left hand side
+is repeated immediately on the right, can be written in compressed form
+`i += 2`. The operator += is called an asignment operator.
+
+
+As an example, the function *bitcount* counts the number of 1-bits in its
+integer argument.
+
+
+**Program**[bitcount](code/bitcount.c)
+
+
+Declaring the argument x to be unsigned ensures that when it is right-shifted
+vacated bits will be filled with zeros, not sign bits, regardless of the 
+machine the program is run on.
+
+
+Quite apart from concisness, assignment operators have the advantage that
+they correspond better to the way people think.
+
+
+We have already seen that the assignment statement has a value and can occur
+in expressions; the most common example is:
+
+```
+while ((c - getchar()) != EOF)
+    ...
+```
+
+
+In all such expressions, the type of an assignment expression is the type
+of its left operand, and the value is the value after the assignment.
+
+
+
