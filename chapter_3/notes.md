@@ -161,4 +161,98 @@ even though it's logically unnecessary. Some day when another case gets
 added at the end, this bit of defensive programming will save you.
 
 
+## 3.5 Loops - While and For
 
+
+We have already encountered the *while* and *for* loops. In:
+```
+while (expression)
+    statement
+```
+the expression is evaluated. If it is non-zero, statement is executed and
+expression is re-evaluated. This cycle continues until expression becomes
+zero, at which point execution resumes after statement.
+
+
+The *for* statement :
+```
+for (expr1; expr2; expr3)
+    statement
+```
+is equivalent to:
+```
+expr1;
+while (expr2) {
+    statement
+    expr3;
+}
+```
+except for the behaviour of continue.
+
+
+Gramatically, the three components of a for loop are expressions. Most 
+commonly, expr1 and expr3 are assignments or function calls and expr2 is a
+relational expression. Any of the three parts can vbe omitted, although
+the semicolons must remain. If expr1 or expr3 is omitted, it is simply
+dropped from the expansion. If the test, expr2, is not present, it is
+taken as permanently true, so:
+
+```
+for (;;) {
+    ...
+}
+```
+is an "infinite" loop, presumably to be broken by other means, such as a 
+break or return.
+
+
+The advantages of keeping loop control centralized are even more obvious
+when there are several nested loops. The following function is a Shell sort
+for sorting an array of integers. The basic idea of sorting algorithm, which
+was invented in 1959 by D. I. Shell, is that in early stages, far-apart 
+elements are compared, rather than adjacent ones as in simpler interchange
+sorts. This tends to eliminate large amounts of disorder quickly, so later
+stages have less work to do. The interval between compared elements is
+gradually decreased to one, at which point the sort effectively becomes
+an adjacent interchange method.
+
+
+**Program**[Shell sort](code/shell_sort.c)
+
+
+There are three nested loops. The outermost controls the gap between compared
+elements, shrinking it from n/2 by a factor of two each pass untill it 
+becomes zero. The middle loop steps along the elements. The innermost
+loop compares each pair of elements that is separated by *gap* and reverses
+any that are out of order. Since *gap* is eventually reduced to one, all 
+elements are eventually ordered correctly. Notice how the generality of the
+for makes the outer loop fit the same form as the others, even though it is 
+not an arithmetic progression.
+
+
+One finaly C operator is the comma ",", which most often finds use in the
+for statement. A pair of expressions separated by a comma is evaluated 
+left to right, and the type and value of the result are the type and value
+of th right operand. Thus in a for statement, it is possible to place 
+multiple expressions in the various parts, for example to process two indices
+in parallel. This is illustrated in the function *reverse(s)*, which reverses
+the string s in place.
+
+
+**Program**[Reverse string](code/reverse_string.c)
+
+
+The commas that separate function arguments, variables in declarations, etc.,
+are not comma operators, and do not guarantee left to right evaluation.
+
+
+Comma operators should be used sparingly. the most suitable uses are for 
+constructs strongly related to each other, as in the for loop in reverse, and
+in macros where a multistep computation has to be a single expression. A comma
+expression might also be appropriate for the exchange of elements in reverse,
+where the exchange can be thought of as a single operation:
+
+```
+for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
+    c = s[i], s[i] = s[j], s[j] = c;
+```
