@@ -159,3 +159,92 @@ cc main.c getline.o strindex.o
 
 The *cc* command uses the ".c" versus ".o" naming convention to distinguish
 source files from object files.
+
+
+## 4.2 Functions Returning Non-integers
+
+
+So far our examples of functions have returned either no value (void)
+or an `int`. What if a function must return some other type? Many numerical
+functions return `double`; other specialized functions return other types.
+To ilustrate how to deal with this, let us write and use the function
+**atof(s)**, which converts the string *s* to its double-precision floating
+point equivalent. It handles an optional sign and decimal point, and the
+presence of absence of either integer part or fractional part. Our version
+is not a high-quality input conversion routine; that would take more space
+than we care to use. The standard library includes an **atof**; the header
+**stdlib.h** declares it.
+
+
+First, atof itself must declare the type of value it returns, since it is
+not int. The type name precedes the function name:
+
+
+**Program:**[atof](code/atof.c)
+
+
+Second, and just as important, the calling routine must know that **atof**
+return a non-int value. One way to ensure this is to declare **atof**
+explicitly in the calling routine. The declaration is shown in this primitive
+calculator (barely adequate for check-book balancing), which reads one 
+number per line, optionally preceeded by a sing, and adds them up, printing
+the running sumb after each input:
+
+
+**Program:**[atof calling routine](code/atof_calling.c)
+
+
+The declaration:
+```
+double sum, atof(char []);
+```
+says that sum is a double variable, and that atof is a function that takes
+one char[] argument and return a double.
+
+
+The function **atof** must be declared and defined consistently. If atof
+itself and the call to it in main have inconsistent types in the same source
+file, the error will be detected by the compiler. But if (as if more likely)
+atof were compiled separetely, the mismatch would not be detected, atof 
+would return a double that main would treat as an int, and meaningless 
+answers would result.
+
+
+In the light of what we have said about how declarations must match
+definitions, this might seem surprising. The reason a mismatch can happen
+is that if there is no function prototype, a function is implicitly declared
+by its first appearance in an expression, such as
+```
+sum += atof(line)
+```
+
+
+If a name that has not been previously declared occurs in an expression
+and is followed by a left parenthesis, it is declared by context to be
+a function name, the function is assumed to return an int, and nothing
+is asumed about its arguments. Furthermore, if a function decalration
+does not include arguments, as in **double atof();** that too is taken
+to mean that nothing is to be assumed about the arguments of atof; all
+parameter checking is turned off. This special meaning of the empty
+argument list is intended to permit older C programs to compile with
+new compilers. But it's a bad idea to use it with new programs. If the 
+function takes arguemtns, decalre them; if it takes no arguments, use 
+**void**.
+
+
+Given atof, properly declared, we could write atoi (convert a strinf to
+an int) in terms of it:
+
+
+```
+// atoi: convert string s to integer using atof
+int atoi(char s[])
+{
+    double atof(char s[]);
+
+    return (int) atof(s);
+}
+```
+
+
+
