@@ -343,4 +343,91 @@ we have decided to store the stack and its associated information in external
 variables accessible to the `push` and `pop` functions but not to `main`.
 
 
+Translating this outline into code is easy enough. If for now we think of the
+program as existing in one source file, it will look like this:
+
+```
+#includes
+#defines
+
+function declarations for main
+
+main() {...}
+
+external variables for push and pop
+
+void push(double f) {...}
+double pop(void) {...}
+
+int getopt(char s[]) {...}
+
+routines called by getopt
+```
+
+
+Later we will discuss how this might be split into two or more source files.
+
+
+The function **main** is a loop containing a big **switch** on the type
+of operator or operand.
+
+
+**Program: **[reverse polish calculator](code/polish_calculator.c)
+
+
+Because **+** and ***** are commutative operators, the order in which the 
+popped operands are combined is irrelevant, but for **-** and **/** the
+left and right operands must be distinguished. In **push(pop() - pop());**
+the order in which the two calls of pop are evaluated is not defined. To
+guarantee the right order, it is necesarry to pop the first value into
+a temproary variable as we did in **main**.
+
+
+A variable is external if it is defined outside of any function. Thus the
+stack and stack index that must be shared by **push** and **pop** are 
+defined outside of these functions. But **main** itslef does not refer to
+the stack or stack position - the representation can be hidden.
+
+
+Let us now turn to the implementation of **getop**, the function that
+fetches the next operator or operand. The task is easy. Skip blanks and tabs.
+If the next character is not a digit or a decimal point, return it. Otherwise
+collect a string of digits (which might include a decimal point), and return 
+NUMBER, the signal that a number has been collected.
+
+
+What are **getch** and **ungetch** ? It is often the case that a program
+cannot determine that it has read enough input until it has read too much.
+One instance is collecting the characters that make up a number: until the 
+first non-digit seen, the number is not complete. But then the program has 
+read one character too far, a character that it is not prepared for.
+
+
+The problem would be solved if it were possibler to "un-read" the unwanted
+character. Then, every time the program reads one character too many, it could
+push it back on the input, so the rest of the code could behave as if it had
+never been read. Fortunately, it's easy to simulate un-getting a character
+, by writing a pair of cooperating functions. **getch** delivers the next 
+input character to be considered; **ungetch** remembers the characters put
+back on the input, so that subsequent calls to getch will return them before
+reading new input.
+
+
+How they work together is simple. **ungetch** puts the pushed back characters
+into a shared buffer - a character array. **getch** reads from the buffer if
+there is anything there, and calls **getchar** if the buffer is empty. There
+must also be an index variable that records the position of the current 
+character in the buffer.
+
+
+Since the buffer and the index are shared by **getch** and **ungetch** and
+must retain their values between calls, they must be external to both
+routines.
+
+
+The standard library includes a function **ungetc** that provide one 
+character of pushback. We have used an array for the pushback, rather than
+a single character, to illustrate a more general approach.
+
+
 
