@@ -686,4 +686,36 @@ internal *static* variables provide private, permanent storage within a
 single function.
 
 
+## 4.7 Register Variables
 
+
+A **register** declaration advises the compiler that the variable in question
+will be heavily used. The idea is that **register** variables are to be placed
+in machine registers, which may result in smaller and faster programs. But
+compiler are free to ignore the advice.
+
+
+The **register** declaration looks like:
+
+```
+register int x;
+register char c;
+```
+
+and so on. The **register** declaration can only be appllied to automatic
+variables and to the formal parameters of a function. In this latter case,
+it looks like:
+
+```
+f(register unsigned m, register long n)
+{
+    register int i;
+}
+```
+
+In practice, there are restrictions on register variables, reflecting the
+realitites of underlying hardware. Only a few variables in each function
+may be kept in registers, and only certain types are allowed. Excess register
+declarations are harmless, however, since the word *register* is ignored for
+excess or disallowed declarations. The specific restrictions on number and
+types of register variables vary from machine to machine.
