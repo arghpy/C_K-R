@@ -769,3 +769,92 @@ the variable y.
 
 As a matter of style, it's best to avoid variable names that conceal names in
 an outer scope; the potential for confusion and error is too great.
+
+
+## 4.9 Initialization
+
+
+Initialization has been mentioned in passing many times so far, but always
+peripherally to some other topic. This secion summarizes some of the rules,
+now that we have discussed the various storage classes.
+
+
+In he absence of explicit initialization, external and static variables are
+guaranteed to be initialized to zero; automatic and register variables have
+undefined (i.e. garbage) initial values.
+
+
+Scalar variables may be initialized when they are defined, by following the
+name with an equals sign and an expression:
+
+```
+int x = 1;
+char squote = '\'';
+long day = 1000L * 60L * 60L * 24L; // miliseconds/day
+```
+
+For external and static variables, the initializer must be a constant
+expression; the initiliazation is done once, conceptually before the program
+begins execution. For automatic and register variables, the initializer is not
+restricted to being a constant: it may be any expression involving previously
+defined values, even function calls. For example, the initializations of the
+binary search program coudl be written as:
+
+```
+int binsearch(int x, int v[], int n)
+{
+    int low = 0;
+    int high = n - 1;
+    int mid;
+    ...
+}
+```
+ instead of
+
+```
+int low, high, mid;
+
+low = 0;
+high = n - 1;
+```
+
+
+In effect, initializations of automatic variables are just shorthand for
+assignment statements. Which form to prefer is largely a matter of taste.
+We have generally used explicit assignments, because initializers in 
+declarations are harder to see and further away from the point of use.
+
+
+An array may be initialized by following its declaration with a list of
+intializers enclosed in braces and sperated by commas. For example, to 
+initialize an array *days* with the number of days in each month:
+
+```
+int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+```
+
+When the size of an array is ommited, the compiler will compute the length
+by counting the initializers, of which there are 12 in this case.
+
+
+If there are fewer initializers for an array than the number specified, the
+missing elements will be zero for external, static and automatic variables.
+It is an error to have too many initializers. there is no way to specify
+repetition of an initializer, nor to initialize an elements in the middle
+of an array without supplying all the preceding values as well.
+
+
+Character arrays are a special case of initialization; a string may be used
+instead of the braces and commas notation:
+
+```
+char pattern[] = "could";
+```
+is a shorthand for the longer but equivalent
+
+```
+char pattern[] = {'c', 'o', 'u', 'l', 'd', '\0'};
+```
+
+In this case, the array size if six (five characters plus the terminating 
+'\0').
