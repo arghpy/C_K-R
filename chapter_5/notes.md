@@ -19,10 +19,8 @@ illustrate.
 
 The main change in ANSI C is to make explicit the rules about how pointers
 can be manipulated, in effect mandating what good programmers already practice
-<<<<<<< HEAD
 and good compilers already enforce. In addition, the type **void \*** (pointer
 to void) replaces **char *** as the proper type for a generic pointer.
-=======
 and good compilers already enforce. In addition, the type **void *** (pointer
 to void) replaces **char \*** as the proper type for a generic pointer.
 
@@ -94,4 +92,3 @@ operators like * and ++ associate right to left.
 finally, since pointers are variables, they can be used without dereferencing.
 For example, if **iq** is another pointer to int, `iq = ip` copies the 
 contents of ip into iq, thus making iq point to whatever ip pointed to.
->>>>>>> chapter5_5.1
