@@ -19,5 +19,5 @@ illustrate.
 
 The main change in ANSI C is to make explicit the rules about how pointers
 can be manipulated, in effect mandating what good programmers already practice
-and good compilers already enforce. In addition, the type **void *** (pointer
+and good compilers already enforce. In addition, the type **void \*** (pointer
 to void) replaces **char *** as the proper type for a generic pointer.
