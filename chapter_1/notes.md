@@ -18,7 +18,7 @@ several control-flow statements and standard library.
 
 As always, the first program would be a 'Hello World!'.
 
-**Program**: [Hello World!](code/hello_world.c)
+**Program:**[ Hello World!](code/hello_world.c)
 
 
 Every C program must end in ".c". To compile it, use the command
@@ -49,7 +49,7 @@ the following table of Fahrenheit temperatures and their centigrade
 or Celsius equivalents:
 
 
-**Program**: [Fahrenheit-Celsius](code/celsius-fahrenheit.c)
+**Program:**[ Fahrenheit-Celsius](code/celsius-fahrenheit.c)
 
 The sizes of C data types are machine independent as they depend directly
 on the CPU.
@@ -74,7 +74,7 @@ output is truncated
 Here is the second version of the program:
 
 
-**Program**: [Fahrenheit-Celsius: version 2](code/celsius-fahrenheit2.c)
+**Program:**[ Fahrenheit-Celsius: version 2](code/celsius-fahrenheit2.c)
 
 We were unable to use 5/9 in the previous version because integer division
 would truncate it to zero. A decimal point in a constant indicates that
@@ -114,7 +114,7 @@ There are plenty of different ways of writting a program. For example,
 the temperature program. This is almost a one liner:
 
 
-**Program**: [Fahrenheit-Celsius: Version 3 - For loop](code/celsius-fahrenheit3.c)
+**Program:**[ Fahrenheit-Celsius: Version 3 - For loop](code/celsius-fahrenheit3.c)
 
 
 ## 1.5 Symbolic Constants
@@ -138,7 +138,7 @@ begins with a letter. The **replacement text** can be any sequence of
 characters; it is not limited to numbers.
 
 
-**Program**: [Fahrenheit-Celsius: Version 4 - SYMBOLIC CONSTANTS](code/celsius-fahrenheit_define.c)
+**Program:**[ Fahrenheit-Celsius: Version 4 - SYMBOLIC CONSTANTS](code/celsius-fahrenheit_define.c)
 
 
 The quantites LOWER, UPPER and STEP are symbolic constants, not variables, so they do not appear in declarations. Symbolic constant names are conventionally
@@ -173,7 +173,7 @@ example is a program that copies its input to its output one character at
 a time:
 
 
-**Program**: [Input to Output](code/input_output.c)
+**Program:**[ Input to Output](code/input_output.c)
 
 
 The problem is distinguishing the end of the input from valid data.
@@ -195,7 +195,7 @@ assignment of a character to `c` is put inside the test part of a `while`
 loop, the copy program can be written this way:
 
 
-**Program**: [Input to Output - version 2](code/input_output2.c)
+**Program:**[ Input to Output - version 2](code/input_output2.c)
 
 This version centralizes the input - there is now only one reference to
 `getchar` - and shrinks the program. The resulting program is more compact,
@@ -208,7 +208,7 @@ and, once the idiom is mastered, easier to read.
 The next program counts characters; it is similar to the copy program.
 
 
-**Program**: [Character counter](code/character_counter.c)
+**Program:**[ Character counter](code/character_counter.c)
 
 
 The caracter counting program accumulates its count in a `long` variable
@@ -222,7 +222,7 @@ It may be possible to cope with even bigger numbers by using a `double`
 of a `while`, to illustrate anothe way to write the loop.
 
 
-**Program**: [Character counter - version2](code/character_counter2.c)
+**Program:**[ Character counter - version2](code/character_counter2.c)
 
 
 `printf` uses %f for both float and double; %.0f suppresses printing of 
@@ -254,7 +254,7 @@ library ensures that an input text stream appears as a sequence of lines, each
 terminated by a newline. Hence, counting lines is just counting newlines:
 
 
-**Program**: [Line counter](code/line_counter.c)
+**Program:**[ Line counter](code/line_counter.c)
 
 
 A character written between single quotes represents an integer value
@@ -281,7 +281,7 @@ characters that does not contain a blank, tab or newline. This is a
 bare-bones version of the UNIX program **`wc`**.
 
 
-**Program**: [wc program](code/wc.c)
+**Program:**[ wc program](code/wc.c)
 
 
 ## 1.6 Arrays
@@ -297,7 +297,7 @@ hold the number of occurrences of each digit, rather than ten individual
 variables. Here is one version of the program:
 
 
-**Program**: [counting](code/counting.c)
+**Program:**[ counting](code/counting.c)
 
 
 ## 1.7 Functions
@@ -325,7 +325,7 @@ Here is the function `power` and a main program to exercise it, so you can
 see the whole structure at once.
 
 
-**Program**: [power](code/pow.c)
+**Program:**[ power](code/pow.c)
 
 
 The names used by `power` for its parameters are local to `power`, and are
@@ -460,7 +460,7 @@ Finally, we need a main program to control **getline** and **copy**. Here is
 the result:
 
 
-**Program**: [Biggest line](code/biggest_line.c)
+**Program:**[ Biggest line](code/biggest_line.c)
 
 
 ## 1.10 External Variables and Scope
@@ -498,7 +498,7 @@ and `max` as external variables. This requires changing the calls, declarations,
 bodies of all three functions.
 
 
-**Program**: [Biggest line - external variables](code/biggest_line_external.c)
+**Program:**[ Biggest line - external variables](code/biggest_line_external.c)
 
 
 The external variables in `main`, `getline`, and `copy` are defined by the first lines of

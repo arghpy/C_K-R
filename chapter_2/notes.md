@@ -188,7 +188,7 @@ the length of its character string argument s, excluding the terminal '\0'.
 Here is our version:
 
 
-**Program**[Strlen version](code/my_strlen.c)
+**Program:**[ Strlen version](code/my_strlen.c)
 
 
 **strlen** and other string functions are declared in the standard header
@@ -363,7 +363,7 @@ expressions. One is exemplified by this naive implementation of the function
 **atoi**, which converts a string of digits into its numeric equivalent:
 
 
-**Program**[Atoi](code/my_atoi.c)
+**Program:**[ Atoi](code/my_atoi.c)
 
 
 As discussed, the expression **s[i] - '0'** gives the numeric value of the 
@@ -375,7 +375,7 @@ which maps a single character to lower case for the ASCII character set. If
 the character is not an upper case letter, **lower** return it unchaged:
 
 
-**Program**[Lower](code/lower.c)
+**Program:**[ Lower](code/lower.c)
 
 
 This works for ASCII because corresponding upper case and lower case letters
@@ -462,7 +462,7 @@ number generator and a function for initializing the seed; the former
 illustrates a cast:
 
 
-**Program**[rand and srand](code/rand_srand.c)
+**Program:**[ rand and srand](code/rand_srand.c)
 
 
 ## 2.8 Increment and Decrement Operators
@@ -495,7 +495,7 @@ is specifically called for. For instance, consider the function
 s:
 
 
-**Program:**[squeeze](code/squeeze.c)
+**Program:**[ squeeze](code/squeeze.c)
 
 
 Each time a non-c occurs, it is copied into the current j position, and only
@@ -535,7 +535,7 @@ that there is enough space in s to hold the combination. As we have written it
 the resulting string:
 
 
-**Program:**[strcat](code/strcat.c)
+**Program:**[ strcat](code/strcat.c)
 
 
 As each character is copied from t to s, the postfix ++ is applied to both
@@ -596,7 +596,7 @@ that n and p are sensible positive values. For example, *getbits(x, 4, 3)*
 returns the three bits in bit position 4, 3 and 2, right adjusted.
 
 
-**Program**[getbits(x, p, n)](code/getbits.c)
+**Program:**[ getbits(x, p, n)](code/getbits.c)
 
 
 The expression **x >> (p + 1 - n)** moves the desired field to the right end
@@ -617,7 +617,7 @@ As an example, the function *bitcount* counts the number of 1-bits in its
 integer argument.
 
 
-**Program**[bitcount](code/bitcount.c)
+**Program:**[ bitcount](code/bitcount.c)
 
 
 Declaring the argument x to be unsigned ensures that when it is right-shifted

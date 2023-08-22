@@ -103,7 +103,7 @@ process of dividing the range in two continues until the value is found
 or the range is empty.
 
 
-**Program**[binary search](code/binary_search.c)
+**Program:**[ binary search](code/binary_search.c)
 
 
 The fundamental decision is whether x is less than, greater than, or equal
@@ -136,7 +136,7 @@ all takes place. Cases and the default clause can occur in any order.
 Here is an example:
 
 
-**Program**[switch example](code/switch_ex.c)
+**Program:**[ switch example](code/switch_ex.c)
 
 
 The **break** statement causes an immediate exit from the *switch*. Because
@@ -217,7 +217,7 @@ gradually decreased to one, at which point the sort effectively becomes
 an adjacent interchange method.
 
 
-**Program**[Shell sort](code/shell_sort.c)
+**Program:**[ Shell sort](code/shell_sort.c)
 
 
 There are three nested loops. The outermost controls the gap between compared
@@ -239,7 +239,7 @@ in parallel. This is illustrated in the function *reverse(s)*, which reverses
 the string s in place.
 
 
-**Program**[Reverse string](code/reverse_string.c)
+**Program:**[ Reverse string](code/reverse_string.c)
 
 
 The commas that separate function arguments, variables in declarations, etc.,
@@ -287,7 +287,7 @@ the easy methods of generating the digits generate them in the wrong order.
 We have chosen to generate the string backwards, then reverse it.
 
 
-**Program**[itoa](code/itoa.c)
+**Program:**[ itoa](code/itoa.c)
 
 
 The *do-while* is necessary, or at least convenient, since at least one
@@ -311,7 +311,7 @@ the end of a string, using a break to exit from a loop when the rightmost
 non-blank, non-tab, non-newline is found.
 
 
-**Program**[trim](code/trim.c)
+**Program:**[ trim](code/trim.c)
 
 
 strlen return the length of the string. The for loop starts at the end and 

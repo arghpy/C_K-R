@@ -79,7 +79,7 @@ also a slightly different version of *getline*; you might find it instructive
 to compare it to the one in Chapter 1.
 
 
-**Program: **[strindex aka grep](code/strindex.c)
+**Program:**[ strindex aka grep](code/strindex.c)
 
 
 Each function definition has the form:
@@ -180,7 +180,7 @@ First, atof itself must declare the type of value it returns, since it is
 not int. The type name precedes the function name:
 
 
-**Program:**[atof](code/atof.c)
+**Program:**[ atof](code/atof.c)
 
 
 Second, and just as important, the calling routine must know that **atof**
@@ -191,7 +191,7 @@ number per line, optionally preceeded by a sing, and adds them up, printing
 the running sumb after each input:
 
 
-**Program:**[atof calling routine](code/atof_calling.c)
+**Program:**[ atof calling routine](code/atof_calling.c)
 
 
 The declaration:
@@ -372,7 +372,7 @@ The function **main** is a loop containing a big **switch** on the type
 of operator or operand.
 
 
-**Program: **[reverse polish calculator](code/polish_calculator.c)
+**Program:**[ reverse polish calculator](code/polish_calculator.c)
 
 
 Because **+** and ***** are commutative operators, the order in which the 
@@ -913,7 +913,7 @@ Our version of quicksort is not the fastest possible, but it's one of the
 simplest. We use the middle element of each subarray for partitioning.
 
 
-**Program: **[quicksort.c](code/quicksort.c)
+**Program:**[ quicksort.c](code/quicksort.c)
 
 
 The standard library includes a version of **quicksort** that can sort objects
