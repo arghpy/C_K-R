@@ -92,3 +92,93 @@ operators like * and ++ associate right to left.
 finally, since pointers are variables, they can be used without dereferencing.
 For example, if **iq** is another pointer to int, `iq = ip` copies the 
 contents of ip into iq, thus making iq point to whatever ip pointed to.
+
+
+## 5.2 Pointers and Function Arguments
+
+
+Since C passes arguments to functions by value, there is no direct way for
+the called function to alter a variable in the calling function. For instance,
+a sorting routine might exchange two out-of-order elements with a function
+called **swap**. It is not enough to write `swap(a, b);` where the **swap**
+function is defined as:
+
+
+```
+void swap(int x, int y)
+{
+    int temp;
+
+    temp = x;
+    x = y;
+    y = temp;
+}
+```
+
+Because of call by value, **swap** can't effect the arguments a and b in the
+routine that called it. The function above **only swaps copies** of a and b.
+
+
+The way to obtain the desired effect is for the calling program to pass 
+`pointers` to the values to be changed: `swap(&a, &b);`.
+
+
+Since the operator `&` produces the address of a variable, `&a` is a pointer
+to a. In swap itself, the parameters are declared to be pointers, and the 
+operands are accessed indifrectly through them.
+
+
+```
+void swap(int *px, int *py)
+{
+    int temp;
+
+    temp = *px;
+    *px = *py;
+    *py = temp;
+}
+```
+
+
+Pointer arguments enable a function to access and change objects in the 
+function that called it. As an example, consider a function `getint` that
+performs free-format input conversion by breaking a stream of characters
+into integer values, one integer per call. `getint` has to return  the value
+it found and also signal end of file when there is no more input. These values
+have to be passed back by separate paths, for no matter what value is used
+for EOF, that could also be the value of an input integer.
+
+
+One solution is to have `getint` return end of file status as its function
+value, while using pointer argument to store the converted integer back in 
+the calling function. This is the scheme used by `scanf` as well.
+
+
+The following loop fills an array with integers by calls to `getint`:
+
+```
+int n, array[SIZE], getint(int *);
+
+for (n = 0; n < SIZE && getint(&array[n]) != EOF; n++)
+    ;
+```
+
+Each call sets `array[n]` to the next integer found in the input and 
+increments `n`. Notice that it is essential to pass the address of `array[n]`
+to `getint`. Otherwise there is no way for `getint` to communicate the
+converted integer back to the caller.
+
+
+Our version of `getint` return EOF for end of file, zero if the next input
+is not a number, and a positive value if the input contains a valid number.
+
+
+**Program:**[ getint](code/getint.c)
+
+
+Throughout `getint`, `*pn` is used as an ordinary `int` variable. We have also
+used `getch` and `ungetch` so the one extra character that must be read
+can be pushed back onto the input.
+
+
+
