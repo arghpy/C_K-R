@@ -631,3 +631,97 @@ are the standard idioms for pushing and popping a stack.
 The header `<string.h>` contains declarations for the functions mentioned
 in this section, plus a variety of other string-handling functions from
 the standard library.
+
+
+## 5.6 Pointer Arrays; Pointers to Pointers
+
+
+Since pointers are variables themselves, they can be stored in arrays just
+as other variables can. Let us illustrate by writing a program that will sort
+a set of text lines into alphabetic order, a stripped-down version of the
+UNIX program `sort`.
+
+
+In Chapter 3, we presented a Shell sort function that would sort an array
+of integers, and in Chapter 4 we improves on it with a quicksort. The same
+algorithms will work, except that now we have to deal with lines of text, 
+which are of different lengths, and which, unlike integers, can't be compared
+or moved in a single operation. We need a data representation that will cope
+efficiently and conveniently with variable-length text lines.
+
+
+This is where the array of pointers enters. If the lines to be sorted are
+stored end-to-end in one long character array, then each line can be accessed
+by a pointer to its first character. The pointers themselves can be stored in
+an array. Two lines can be compared by passing their pointers to `strcmp`.
+When two out-of-order lines have to be exchanged, the pointers in the pointer
+array are exchanged, not the text lines themsleves.
+
+
+This eliminates the twin problems of complicated storage management and
+high overhead that would go with moving the lines themselves.
+
+
+The sorting process has three steps:
+
+```
+read all the lines of input
+sort them
+print them in order
+```
+
+As usual, it's best to divide the program into functions that match this
+natural division, with the main routine controlling the other functions. Let
+us defer the sorting step for a moment, and concentrate on the data structure
+and the input and output.
+
+
+The input routine has to collect and save the characters of each line, and
+build an array of pointers to the lines. It will also have to count the
+number of input lines, since that information is needed for sorting and 
+printing. Since the input function can only cope with a finite number of
+input lines, it can return some illegal line count like -1 if too much input
+is presented.
+
+
+The output routine only has to print the lines in order in which they appear
+in the array of pointers.
+
+
+**Program:**[ sort](code/sort.c)
+
+
+The main new thing is the declaration for `lineptr`: `char *lineptr[MAXLINES]`
+says that `lineptr` is an array of MAXLINES elements, each element of which
+is a pointer to a char. That is, `lineptr[i]` is a character pointer, and
+`*lineptr[i]` is the character it points to, the first character of the i-th
+saved text line.
+
+
+Since `lineptr` is itself the name of an array, it can be treated as a pointer
+in the same manner as in our earlier examples, and `writelines` can be written
+instead as:
+
+```
+/* writelines: write output lines */
+void writelines(char *lineptr[], int nlines)
+{
+    while (nlines-- > 0)
+        printf("%s\n", *lineptr++);
+}
+```
+
+
+Initially `*lineptr` points to the first line; each increment advances it to
+the next line pointer while `nlines` is counted down.
+
+
+With input and output under control, we can proceed to sorting. The quicksort
+from Chapter 4 need minor changes: the declarations have to be modified, and
+the comparison operation must be done by calling `strcmp`. The algorithm
+remains the same, which gives us some confidence that it will still work.
+Similarly, the swap routine need only trivial changes.
+
+
+Since and individual element of `v` (alias `lineptr`) is a character pointer,
+`temp` must be also, so one can be copied to the other.
