@@ -818,3 +818,39 @@ declaration of f would be `f(int daytab[2][3]) {...}`, it could also be
 *. Without parantheses, the declaration `int *daytab[3]` is an array of 3 pointers to
 integers. More generally, only the first dimension (subscript) of an array is free; 
 all the others have to be specified.
+
+
+## 5.8 Initialization of Pointer Arrays
+
+
+Consider the problem of writing a function `month_name(n)`, which returns a pointer
+to a character string containing the name of the n-th month. This is an ideal 
+application for an internal `static` array. `month_name` contains a private array
+of character strings, and returns a pointer to the proper one when called. This section 
+shows how that array of names is initialized. The syntax is similar to previous 
+initializations:
+
+```
+/* month_name: return name of the n-th month */
+char *month_name(int n)
+{
+    static char *name[] = {
+        "Illegal month",
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    };
+
+    return (n < 1 || n > 12) ? name[0] : name[n];
+}
+```
+
+
+The declaration of `name`, which is an array of chracter pointers, is the same as
+`lineptr` in the sorting example. The initializer is a list of character strings; each
+is assigned to the corresponding position in the array. The characters of the i-th
+string are placed somewhere, and a pointer to htem is stored in `name[i]`. Since the
+size of the array `name` is not specified, the compiler counts the initializers and 
+fills in the correct number.
+
