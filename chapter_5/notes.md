@@ -893,3 +893,157 @@ with those for a two-dimensional array:
 ```
 char aname[][15] = {"illegal month", "Jan", "Feb", "Mar"};
 ```
+
+
+## 5.10 Command-line Arguments
+
+
+In environments that support C, there is a way to pass command-line arguments or 
+parameters to a program when it begins executing. When `main` is called, it is called
+with two arguments. The first (conventionally called `argc`, for argument count) is 
+the number of command-line arguments the program was invoked with; the second (`argv`,
+for argument vector) is a pointer to an array of character string that contain the 
+arguments, one per string. We customarily use multiple levels of pointers to manipulate
+these character strings.
+
+
+The simplest illustratino is the program `echo`, which  echoes its command-line 
+arguments on a single line, separated by blanks. That is, the command 
+`echo hello, world` prints the output `hello, world`.
+
+
+By convention, `argv[0]` is the name by which the program was invoked, so `argc` is at
+least 1. If `argc` is 1, there are no command-line arguments after the program name.
+In the example above, `argc` is 3, and `argv[0]`, `argv[1]` and `argv[2]` are "echo", 
+"hello," and "world" respectively. The first optional argument is `argv[1]` and the last
+is `argv[arcg - 1]`; additionally, the standard requires that `argv[argc]` be a null
+pointer.
+
+
+The first version of `echo` treats `argv` as an array of character pointers:
+
+```
+#include <stdio.h>
+
+/* echo command-line arguments; 1st version */
+int main(int argc, char *argv[])
+{
+    int i;
+
+    for (i = 1; i < argc; i++)
+        printf("%s%s", argv[i], (i < argc - 1) ? " " : "");
+    
+    printf("\n");
+
+    return 0;
+}
+```
+
+
+Since `argv` is a pointer to an array of pointers, we can manipulate the pointer rather
+than index the array. This next variation is based on incrementing `argv`, which is
+a pointer to pointer to `char`, while `argc` is counted down:
+
+
+```
+#include <stdio.h>
+
+/* echo command-line arguments; 2nd version */
+int main(int argc, char *argv[])
+{
+    while (--argc > 0)
+        printf("%s%s", *++argv, (argc > 1) ? " " : "");
+    
+    printf("\n");
+
+    return 0;
+}
+```
+
+
+Since `argv` is a pointer to the beginning of the array of argument strings, 
+incrementing it by 1 (`++argv`) makes it point at the original `argv[1]` instead of
+`argv[0]`. Each successive increment moves it along to the next argument; `*argv` is
+then the pointer to that argument. At the same time, `argc` is decremented; when it 
+becomes zero, there are no arguments left to print.
+
+
+Alternatively, we could write the `printf` statement as `printf((argc > 1) ? "%s " : 
+"%s", *++argv);`
+
+
+This shows that the format argument of `printf` can be an expression too.
+
+
+As a second example, let us make some enhancements to the pattern-finding program from
+Section 4.1. If you recall, we wired the search pattern deep into the program, an 
+obviously unsatisfactory arrangement. Following the lead of the UNIX program `grep`
+let us change the program so the pattern to be matched is specified by the first 
+argument on the commmand line.
+
+
+```
+#include <stdio.h>
+#include <string.h>
+
+#define MAXLINE 1000
+
+int getline(char *line, int max);
+
+/* find: print lines that match pattern from 1st arg */
+int main(int argc, char *argv[])
+{
+    char line[MAXLINE];
+    int found = 0;
+
+    if (argc != 2)
+        printf("Usage: find pattern\n");
+    else
+        while (getline(line, MAXLINE) > 0)
+            if (strstr(line, argv[1]) != NULL) {
+                printf("%s", line);
+                found++;
+            }
+    return found;
+}
+```
+
+
+The standard library function `strstr(s, t)` return a pointer to the first occurence
+of the string t in the string s, or NULL if there is none. It is declared in 
+`<string.h>`.
+
+
+The model can now be elaborated to illustrate further pointer constructions. Suppose
+we want to allow two optional arguments. One says "print all lines *except* those that
+match the pattern;" the second says "preceed each printed line by its line number."
+
+
+A common convention for C programs on UNIX systems is that an argument that begins 
+with a minus sign introduces an optional flag or parameter. If we choose `-x` (for 
+except) to signal the inversion, and `-n` ("number") to request line numbering, then
+the command `find -x -n pattern` will print each line that doesn't match the pattern,
+preceede by its line number.
+
+
+Optional arguments should be permitted in any order, and the rest of the program should
+be independent of the number of the arguments that were present. Futhermore, it is 
+convenient for users if option arguments can be combined, as in `find -nx pattern`.
+
+
+**Program:**[ optional arguments](code/optional_args.c)
+
+
+`argc` is decremented and `argv` is incremented before each optional argument. At the
+end of the loop, if there are no errors, `argc` tells how many arguments remain
+unprocessed and `argv` points to the first of these. Thus `argc` should be 1 and 
+`*argv` should point at the pattern. Notice that `*++argv` is a pointer to an argument
+string, so `(*++argv)[0]` is its first character. (An alternate valid form would be
+**++argv). Because [] binds tighter than * and ++, the parantheses are necessary;
+without them the expression would be taken as `*++(argv[0])`. In fact, that is what
+we used in the inner loop, where the task is to walk along a specific argument string.
+In the inner loop, the expression `*++argv[0]` increments the pointer `argv[0]`!
+
+
+It is rare that one uses pointer expressions more complicated than these; in such cases
+, breaking them into two or three steps will be more intuitive.
