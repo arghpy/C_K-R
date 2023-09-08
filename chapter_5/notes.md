@@ -1047,3 +1047,64 @@ In the inner loop, the expression `*++argv[0]` increments the pointer `argv[0]`!
 
 It is rare that one uses pointer expressions more complicated than these; in such cases
 , breaking them into two or three steps will be more intuitive.
+
+
+## 5.11 Pointers to Functions
+
+
+In C, a function itself is not a variable, but it is possible to define pointers to 
+functions, which can be assigned, placed in arrays, passed to functions, returned
+by functions, and so on. We will illustrate this by modifying the sorting procedure
+written earlier in this chapter so that if the optional argument `-n` is given, it will
+sort the input lines numerically instead of lexicographically.
+
+
+A sort often consists of three parts - a comparison that determines the ordering
+of any pair of objects, an exchange that reverses their order, and a sorting algorithm
+that makes comparisons and exchanges until the objects are in order. The sorting
+algorithm is independent of the comparison and exchange operations, so by passing
+different comparisons and exchange functions to it, we can arrange to sort by 
+different criteria. This is the appraoch taken in our new sort.
+
+
+Lexicographic comparison of two lines is done by `strcmp`, as before; we will also
+need a routine `numcmp` that compares two lines on the basis of numeric value and
+returns the same kind of condition indication as `strcmp` does. These functions are
+declared ahead of `main` and a pointer to the appropiate oone is passed to `qsort`.
+We have skimped on error processing for arguments, so as to concentrate on the
+main issues.
+
+
+**Program:**[ qsort numeric](code/qsort_num.c)
+
+
+In the call to `qsort`, `strcmp` and `numcmp` are addresses of functions. Since they
+are known to be functions, the `&` operator is not necessary, in the sam way that it
+is not needed before an array name.
+
+
+We have written `qsort` so ti can process any data type, not just character strings.
+As indicated by the function prototype, `qsort` expects an array of pointers, two 
+integers, and a function with two pointer arguments. The generic pointer type 
+`void *` is used for the pointer arguments. Any pointer can be cast to `void *` and
+back again without loss of information, so we can call `qsort` by casting arguments to
+`void *`. The elaborate cast of the function argument casts the arguments of the 
+comparison function. These will generally have no effect on actual representation, 
+but assure the compiler that all is well.
+
+
+The declarations should be studied with some care. The fourth parameter of `qsort`
+is `int (*comp)(void *, void *)` which says that `comp` is a pointer to a function 
+that has two `void *` arguments and return an `int`.
+
+
+The use of `comp` int the line `if ((*comp)(v[i], v[left]) < 0)` is consistent with the
+declaration: `comp` is a pointer to a function, `*comp` is the function, and 
+`(*comp)(v[i], v[left])` is the call to it. The paranthesees are needed so the
+components are correctly associated; without them, `int *comp(void* ,void *)` 
+says that `comp` is a function returning a pointer ot an `int`, which is 
+very different.
+
+
+Thw `swap` function, which exchanges two pointers, is identical to what we presented
+earlier in the chapter, except that the declarations are changed to `void *`.
