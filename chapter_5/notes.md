@@ -1108,3 +1108,78 @@ very different.
 
 Thw `swap` function, which exchanges two pointers, is identical to what we presented
 earlier in the chapter, except that the declarations are changed to `void *`.
+
+
+## 5.12 Complicated Declarations
+
+
+C is sometimes castigated for the syntax of its declarations, particularly ones that
+involve pointers to functions. The syntax is an attempt to make the declaration and
+the use agree; it works well for simple cases, but it can be confusing for the 
+harder ones, because declarations cannot be read left to right, and because parantheses
+are over-used. The difference between `int *f(); // f: function returning pointer to 
+int` and `int (*pf)(); // pf: pointer to funtion returning int` illustrates the 
+problem; * is prefix operator and it has lower precedence than (), so parantheses
+are necessary to force the proper association.
+
+
+Although truly complicated declaration rarely arise in practice, it is important to
+know how to understand them, and, if necessary, how to create them. One good way to
+synthesize declarations is in small stepts with `typedef`, which is discussed in 
+Section 6.7. As an alternative, in this section we will present a pair of programs
+that convert from valid C to a word description and back again. The word description
+read left to right.
+
+
+The first, `dcl`, is the more complex. It converts a C declaration into a word
+description, as in these examples:
+
+```
+char **argv
+    argv: pointer to pointer to char
+
+int (*daytab)[13]
+    daytab: pointer to array[13] of int
+
+int *daytab[13]
+    daytab: array[13] of pointer to int
+
+void *comp()
+    comp: function returning pointer to void
+
+void (*comp)()
+    comp: pointer to function returning void
+
+char (*(*x())[])()
+    x: function returning pointer to array[] of 
+       pointer to function returning char
+
+char (*(*x[3])())[5]
+    x: array[3] of pointer to function returning
+       pointer to array[5] of char
+```
+
+
+`dcl` is based on the grammar that specifies a declarator, which is spelled out 
+precisely in Appendix A, Section 8.5; this is a simplified form:
+
+```
+dcl:        optional *'s direct-dcl
+direct-dcl: name
+            (dcl)
+            direct-dcl()
+            direct-dcl[optional size]
+```
+
+In words, a `dcl` is a `drect-dcl`, perhaps preceded by *'s. A `direct-dcl` is a name,
+or a paranthesized `dcl`, or a `direct-dcl` followed by parantheses, or a `direct-dcl`
+followed by brackets with an optional size.
+
+
+This grammar can be used to parse declarations. For instance, consider this declarator:
+`(*pfa[])()`. `pfa` will be identified as a name, and thus as a direct-dcl. Then 
+`pfa[]` is recognized as a dcl, so `(*pfa[])` is a direct-dcl. Then `(*pfa[])()` is
+a direct-dcl, and thus a dcl.
+
+
+
